@@ -4,9 +4,11 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.NaturalId;
 
 @Entity
+@Table(name="user")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false,unique = true, length=12)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     @NaturalId
@@ -14,7 +16,11 @@ public class User {
     private String email;
     private String name, pic, password;
 
+
     public User() {
+    }
+    public User(String email) {
+        this.email = email;
     }
 
     public int getId() {
@@ -23,6 +29,17 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", pic='" + pic + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 
     public String getName() {
