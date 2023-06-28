@@ -43,7 +43,6 @@ public class UserController {
         }
 
         LoginResponse res = userService.loginUser(user);
-
         return res;
     }
 }

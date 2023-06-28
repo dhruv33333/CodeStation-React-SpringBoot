@@ -4,6 +4,7 @@ import com.dhruv.CodeStation.DTO.UserDTO;
 import com.dhruv.CodeStation.model.User;
 import com.dhruv.CodeStation.repository.UserRepository;
 import com.dhruv.CodeStation.response.LoginResponse;
+import com.dhruv.CodeStation.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -49,7 +50,9 @@ public class UserServiceImplementation implements UserService{
             return new LoginResponse("Incorrect password!", "failure");
         }
 
-        return new LoginResponse(userExists.getName(), userExists.getEmail(), userExists.getPic(), "sampl token", "success", "ok");
+        Utils utils = new Utils();
+
+        return new LoginResponse(userExists.getName(), userExists.getEmail(), userExists.getPic(), utils.generateToken(userExists.getEmail()), "success", "ok");
     }
 
 }

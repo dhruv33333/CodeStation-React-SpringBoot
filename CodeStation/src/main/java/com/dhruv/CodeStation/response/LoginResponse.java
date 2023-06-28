@@ -1,24 +1,75 @@
 package com.dhruv.CodeStation.response;
 
 class Data {
-    String name, email, token, pic;
+     String name, email, token, pic;
+
     public Data(String name, String email, String pic, String token) {
         this.name = name;
         this.email = email;
         this.pic = pic;
         this.token = token;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getPic() {
+        return pic;
+    }
+
+    public void setPic(String pic) {
+        this.pic = pic;
+    }
 }
 
 public class LoginResponse {
 
     private String message, status;
-    private Data data;
+    Data data;
+
 
     public LoginResponse(String name, String email, String pic, String token, String message, String status) {
-        data = new Data(name, email, pic, token);
-        this.message = message;
+        data = new Data(name,email,pic,token);
+        this.message=message;
         this.status = status;
+    }
+
+    public LoginResponse( String message, String status) {
+        this.message=message;
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "LoginResponse{" +
+                "message='" + message + '\'' +
+                ", status='" + status + '\'' +
+                ", name='" + data.name + '\'' +
+                ", email='" + data.email + '\'' +
+                ", token='" + data.token + '\'' +
+                ", pic='" + data.pic + '\'' +
+                '}';
     }
 
     public String getMessage() {
@@ -37,16 +88,11 @@ public class LoginResponse {
         this.status = status;
     }
 
-    public LoginResponse(String message, String status) {
-        this.message = message;
-        this.status = status;
+    public Data getData() {
+        return data;
     }
 
-    @Override
-    public String toString() {
-        return "LoginResponse{" +
-                "message='" + message + '\'' +
-                ", status='" + status + '\'' +
-                '}';
+    public void setData(Data data) {
+        this.data = data;
     }
 }
