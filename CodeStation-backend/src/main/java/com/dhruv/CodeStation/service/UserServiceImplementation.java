@@ -4,6 +4,7 @@ import com.dhruv.CodeStation.DTO.UserDTO;
 import com.dhruv.CodeStation.model.User;
 import com.dhruv.CodeStation.repository.UserRepository;
 import com.dhruv.CodeStation.response.LoginResponse;
+import com.dhruv.CodeStation.response.RegisterResponse;
 import com.dhruv.CodeStation.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,17 +20,17 @@ public class UserServiceImplementation implements UserService{
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public String registerUser(UserDTO user) {
+    public RegisterResponse registerUser(UserDTO user) {
 
         User res = userRepository.findByEmail(user.getEmail());
 
         if(userRepository.findByEmail(user.getEmail()) != null) {
-            return "User with same email already registered";
+            return new RegisterResponse("failure", "User with same email already registered");
         }
 
         User newUser = new User(user.getEmail());
         newUser.setName(user.getName());
-        if(user.getPic() != null || user.getPic().length() != 0) {
+        if(user.getPic() != null && user.getPic().length() != 0) {
             newUser.setPic(user.getPic());
         }
 
@@ -37,7 +38,7 @@ public class UserServiceImplementation implements UserService{
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
 
         userRepository.save(newUser);
-        return "User registered successfully";
+        return new RegisterResponse("ok", "User registered successfully");
     }
 
     public LoginResponse loginUser(UserDTO user) {

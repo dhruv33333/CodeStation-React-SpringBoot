@@ -2,6 +2,7 @@ package com.dhruv.CodeStation.controller;
 
 import com.dhruv.CodeStation.DTO.UserDTO;
 import com.dhruv.CodeStation.response.LoginResponse;
+import com.dhruv.CodeStation.response.RegisterResponse;
 import com.dhruv.CodeStation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,32 +16,33 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    public String register(@RequestBody UserDTO user) {
+    public ResponseEntity<RegisterResponse> register(@RequestBody UserDTO user) {
 
         if (user.getName() == null || user.getName().isEmpty()) {
-            return "Please enter all credentials";
+            return ResponseEntity.status(400).body(new RegisterResponse("failure", "Please enter all credentials"));
         }
         if (user.getEmail() == null || user.getEmail().isEmpty()) {
-            return "Please enter all credentials";
+            return ResponseEntity.status(400).body(new RegisterResponse("failure", "Please enter all credentials"));
         }
         if (user.getPassword() == null || user.getPassword().isEmpty()) {
-            return "Please enter all credentials";
+            return ResponseEntity.status(400).body(new RegisterResponse("failure", "Please enter all credentials"));
         }
 
-        return userService.registerUser(user);
+        RegisterResponse res = userService.registerUser(user);
+        return ResponseEntity.status(200).body(res);
     }
 
     @PostMapping("/login")
-    public LoginResponse login(@RequestBody UserDTO user) {
+    public ResponseEntity<LoginResponse> login(@RequestBody UserDTO user) {
 
         if (user.getEmail() == null || user.getEmail().isEmpty()) {
-            return new LoginResponse("Please enter call credentials", "failure");
+            return ResponseEntity.status(400).body(new LoginResponse("Please enter call credentials", "failure")) ;
         }
         if (user.getPassword() == null || user.getPassword().isEmpty()) {
-            return new LoginResponse("Please enter call credentials", "failure");
+            return ResponseEntity.status(400).body(new LoginResponse("Please enter call credentials", "failure")) ;
         }
 
         LoginResponse res = userService.loginUser(user);
-        return res;
+        return ResponseEntity.status(200).body(res);
     }
 }
