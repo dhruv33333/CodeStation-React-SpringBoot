@@ -47,65 +47,66 @@ const Login = () => {
     }
   }, []);
 
-  //   const handleLogin = async () => {
-  //     const { email, password } = loginInfo;
-  //     if (!email || !password) {
-  //       toast({
-  //         title: "Please enter all the details!",
-  //         status: "error",
-  //         duration: 5000,
-  //         isClosable: true,
-  //         position: "bottom-left",
-  //       });
-  //     }
+  const handleLogin = async () => {
+    const { email, password } = loginInfo;
+    if (!email || !password) {
+      toast({
+        title: "Please enter all the details!",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-left",
+      });
+      return;
+    }
 
-  //     try {
-  //       setLoading(true);
-  //       const apiResponse = await fetch("/user/login", {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({ email, password }),
-  //       });
-  //       setLoading(false);
+    try {
+      setLoading(true);
+      const apiResponse = await fetch("/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      setLoading(false);
 
-  //       const res = await apiResponse.json();
-  //       if (res.status === "ok") {
-  //         toast({
-  //           title: res.message,
-  //           status: "success",
-  //           duration: 5000,
-  //           isClosable: true,
-  //           position: "bottom-left",
-  //         });
+      const res = await apiResponse.json();
+      if (res.status === "ok") {
+        toast({
+          title: res.message,
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom-left",
+        });
 
-  //         // storing our user (with auth token) in local storage
-  //         const stringData = JSON.stringify(res.data);
-  //         localStorage.setItem("user", stringData);
+        // storing our user (with auth token) in local storage
+        const stringData = JSON.stringify(res.data);
+        localStorage.setItem("user", stringData);
 
-  //         setUser(res.data); // TODO - debug why removing this sometimes doesnt run the hook
-  //         history.push("/home");
-  //       } else {
-  //         toast({
-  //           title: res.error,
-  //           status: "error",
-  //           duration: 5000,
-  //           isClosable: true,
-  //           position: "bottom-left",
-  //         });
-  //         return;
-  //       }
-  //     } catch (err) {
-  //       console.log(err);
-  //       setLoading(false);
-  //     }
-  //   };
+        // setUser(res.data); // TODO - debug why removing this sometimes doesnt run the hook
+        history.push("/home");
+      } else {
+        toast({
+          title: res.message,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom-left",
+        });
+        return;
+      }
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+    }
+  };
 
   const handleRegister = async () => {
     const { name, email, password, cpassword } = registerInfo;
 
-    if (!name || !email || !password || !cpassword || !pic) {
+    if (!name || !email || !password || !cpassword) {
       toast({
         title: "Please enter all the details!",
         status: "error",
@@ -139,7 +140,7 @@ const Login = () => {
           email,
           password,
           cpassword,
-          profilePic: pic,
+          pic,
         }),
       });
 
@@ -195,7 +196,7 @@ const Login = () => {
               setLoginInfo={setLoginInfo}
               registerInfo={registerInfo}
               setRegisterInfo={setRegisterInfo}
-              //   handleLogin={handleLogin}
+              handleLogin={handleLogin}
               handleRegister={handleRegister}
               isLoading={loading}
               setLoading={setLoading}
