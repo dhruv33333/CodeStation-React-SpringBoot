@@ -6,7 +6,7 @@ import LoginImg from "../../assets/login.jpg";
 import RegisterImg from "../../assets/register.jpg";
 
 // context
-// import { useAppContext } from "../../contexts/AppProvider";
+import { useAppContext } from "../../contexts/AppProvider";
 
 // components
 import Form from "./Form";
@@ -21,16 +21,16 @@ import {
   InnerWrap,
   Tab,
   Header,
+  PageWrapper,
 } from "./styled";
 
 const Login = () => {
   const toast = useToast();
   const history = useHistory();
-  //   const { setUser } = useAppContext();
+  const { setUser } = useAppContext();
   const [selectedTab, setSelectedTab] = useState("login");
   const [loading, setLoading] = useState(false);
   const [loginInfo, setLoginInfo] = useState({ email: "", password: "" });
-  //TODO- Add profile upload logic
   const [registerInfo, setRegisterInfo] = useState({
     name: "",
     email: "",
@@ -85,7 +85,7 @@ const Login = () => {
         const stringData = JSON.stringify(res.data);
         localStorage.setItem("user", stringData);
 
-        // setUser(res.data); // TODO - debug why removing this sometimes doesnt run the hook
+        setUser(res.data);
         history.push("/home");
       } else {
         toast({
@@ -170,7 +170,7 @@ const Login = () => {
   };
 
   return (
-    <>
+    <PageWrapper>
       <Header>Code Station</Header>
       <Wrapper>
         <Tabs>
@@ -223,7 +223,7 @@ const Login = () => {
           </RightSection>
         </InnerWrap>
       </Wrapper>
-    </>
+    </PageWrapper>
   );
 };
 

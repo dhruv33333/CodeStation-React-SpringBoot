@@ -2,7 +2,6 @@ import styled, { css } from "styled-components";
 
 export const Header = styled.div`
   margin-top: 30vh;
-  width: 56%;
   border-radius: 20px;
   background: white;
   box-shadow: 0 15px 16.83px 0.17px rgba(0, 0, 0, 0.05);
@@ -18,7 +17,6 @@ export const Wrapper = styled.div`
   background: white;
   box-shadow: 0 15px 16.83px 0.17px rgba(0, 0, 0, 0.05);
   border-radius: 20px;
-  width: 56%;
   margin: auto;
   margin-top: 40px;
   padding: 20px 60px 40px;
@@ -28,6 +26,12 @@ export const InnerWrap = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+
+  @media (max-width: 920px) {
+    align-items: flex-end;
+    div + div {
+    }
+  }
 `;
 
 export const LeftSection = styled.div`
@@ -103,14 +107,39 @@ export const Tab = styled.button`
   font-size: 16px;
   text-align: center;
   padding: 10px;
-
-  border: none;
+  border-radius: 20px;
+  border: 1px solid transparent;
   background: transparent;
+
+  &:hover {
+    border: 1px solid black;
+  }
   ${({ selected }) =>
     selected &&
     css`
       background: #a7e2ff;
-      border-radius: 20px;
+      &:hover {
+        border: none;
+      }
       color: #397690;
     `}
+`;
+
+export const PageWrapper = styled.div`
+  width: 70vw;
+  margin: 12vh auto;
+  box-sizing: border-box;
+
+  @media (max-width: 920px) {
+    width: 95vw;
+    img {
+      display: none;
+    }
+    ${LeftSection} {
+      width: 100%;
+      > div {
+        width: 100%;
+      }
+    }
+  }
 `;
