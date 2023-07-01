@@ -1,5 +1,7 @@
 package com.dhruv.CodeStation.utils;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -22,4 +24,18 @@ public class Utils {
                 .signWith(SECRET_KEY)
                 .compact();
     }
+
+    public String validateToken(String token) {
+        try {
+            String decoded = Jwts.parserBuilder()
+                    .setSigningKey(SECRET_KEY)
+                    .build()
+                    .parseClaimsJws(token).getBody().getSubject();
+            return decoded;
+        } catch (Exception e) {
+            // Token verification failed
+            return null;
+        }
+    }
+
 }

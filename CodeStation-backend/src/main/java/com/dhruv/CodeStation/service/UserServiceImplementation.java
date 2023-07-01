@@ -19,6 +19,8 @@ public class UserServiceImplementation implements UserService{
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    private Utils utils = new Utils();
+
     @Override
     public RegisterResponse registerUser(UserDTO user) {
 
@@ -50,8 +52,6 @@ public class UserServiceImplementation implements UserService{
         if(!passwordEncoder.matches(user.getPassword(), userExists.getPassword())) {
             return new LoginResponse("Incorrect password!", "failure");
         }
-
-        Utils utils = new Utils();
 
         return new LoginResponse(userExists.getName(), userExists.getEmail(), userExists.getPic(), utils.generateToken(userExists.getEmail()), "success", "ok");
     }
