@@ -27,6 +27,9 @@ public class UserController {
         if (user.getPassword() == null || user.getPassword().isEmpty()) {
             return ResponseEntity.status(400).body(new RegisterResponse("failure", "Please enter all credentials"));
         }
+        if(!user.getPassword().equals(user.getcPassword())) {
+            return ResponseEntity.status(400).body(new RegisterResponse("failure", "Both passwords don't match!"));
+        }
 
         RegisterResponse res = userService.registerUser(user);
         return ResponseEntity.status(200).body(res);

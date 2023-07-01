@@ -14,8 +14,15 @@ public class User {
     @NaturalId
     @Column(nullable = false,unique = true)
     private String email;
-    private String name, pic, password;
+    private String name, pic, password, cPassword;
 
+    public String getcPassword() {
+        return cPassword;
+    }
+
+    public void setcPassword(String cPassword) {
+        this.cPassword = cPassword;
+    }
 
     public User() {
     }

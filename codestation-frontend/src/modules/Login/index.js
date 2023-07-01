@@ -139,7 +139,7 @@ const Login = () => {
           name,
           email,
           password,
-          cpassword,
+          cPassword: cpassword,
           pic,
         }),
       });

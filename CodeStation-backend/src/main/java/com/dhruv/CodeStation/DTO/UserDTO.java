@@ -3,13 +3,22 @@ package com.dhruv.CodeStation.DTO;
 
 public class UserDTO {
 
-    private String name, pic, password, email;
+    private String name, pic, password, email, cPassword;
 
-    public UserDTO(String name, String pic, String password, String email) {
+    public UserDTO(String name, String pic, String password, String cPassword, String email) {
         this.name = name;
         this.pic = pic;
         this.password = password;
         this.email = email;
+        this.cPassword = cPassword;
+    }
+
+    public String getcPassword() {
+        return cPassword;
+    }
+
+    public void setcPassword(String cPassword) {
+        this.cPassword = cPassword;
     }
 
     public String getName() {
