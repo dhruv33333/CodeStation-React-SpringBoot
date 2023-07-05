@@ -1,4 +1,4 @@
-package com.dhruv.CodeStation.response;
+package com.dhruv.CodeStation.response.Users;
 
 class Data {
      String name, email, token, pic;

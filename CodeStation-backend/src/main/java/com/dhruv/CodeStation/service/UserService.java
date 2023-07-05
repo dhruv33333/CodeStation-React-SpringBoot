@@ -1,9 +1,8 @@
 package com.dhruv.CodeStation.service;
 
 import com.dhruv.CodeStation.DTO.UserDTO;
-import com.dhruv.CodeStation.model.User;
-import com.dhruv.CodeStation.response.LoginResponse;
-import com.dhruv.CodeStation.response.RegisterResponse;
+import com.dhruv.CodeStation.response.Users.LoginResponse;
+import com.dhruv.CodeStation.response.Users.RegisterResponse;
 
 
 public interface UserService {

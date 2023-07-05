@@ -1,4 +1,4 @@
-package com.dhruv.CodeStation.response;
+package com.dhruv.CodeStation.response.Users;
 
 public class RegisterResponse {
     private String status, message;

@@ -1,8 +1,8 @@
 package com.dhruv.CodeStation.controller;
 
 import com.dhruv.CodeStation.DTO.UserDTO;
-import com.dhruv.CodeStation.response.LoginResponse;
-import com.dhruv.CodeStation.response.RegisterResponse;
+import com.dhruv.CodeStation.response.Users.LoginResponse;
+import com.dhruv.CodeStation.response.Users.RegisterResponse;
 import com.dhruv.CodeStation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
