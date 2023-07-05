@@ -1,25 +1,26 @@
-package com.dhruv.CodeStation.response;
+package com.dhruv.CodeStation.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "problem")
 public class Problem {
-    private int problemId;
+    @Id
+    @Column(nullable = false, unique = true, length = 12)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
+
     private String title, difficulty, acceptance, description, exampleIn, exampleOut;
 
-    public Problem(int problemId, String title, String difficulty, String acceptance, String description, String exampleIn, String exampleOut) {
-        this.problemId = problemId;
-        this.title = title;
-        this.difficulty = difficulty;
-        this.acceptance = acceptance;
-        this.description = description;
-        this.exampleIn = exampleIn;
-        this.exampleOut = exampleOut;
+    public Problem() {
     }
 
-    public int getProblemId() {
-        return problemId;
+    public int getId() {
+        return id;
     }
 
-    public void setProblemId(int problemId) {
-        this.problemId = problemId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {

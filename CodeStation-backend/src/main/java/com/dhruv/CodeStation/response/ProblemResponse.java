@@ -2,24 +2,22 @@ package com.dhruv.CodeStation.response;
 
 import com.dhruv.CodeStation.model.Problem;
 
-import java.util.List;
-
-public class AllProblemsResponse {
+public class ProblemResponse {
+    private Problem data;
     private String status, message;
-    private List<Problem> problems;
 
-    public AllProblemsResponse(String status, String message, List<Problem> problems) {
-        this.status = status;
+    public ProblemResponse(Problem data, String message, String status) {
+        this.data = data;
         this.message = message;
-        this.problems = problems;
+        this.status = status;
     }
 
-    public List<Problem> getProblems() {
-        return problems;
+    public Problem getData() {
+        return data;
     }
 
-    public void setProblems(List<Problem> problems) {
-        this.problems = problems;
+    public void setData(Problem data) {
+        this.data = data;
     }
 
     public String getStatus() {
