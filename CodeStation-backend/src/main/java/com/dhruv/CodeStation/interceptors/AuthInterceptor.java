@@ -26,13 +26,13 @@ public class AuthInterceptor implements HandlerInterceptor {
             token = token.substring(7); // removes "Bearer "
         }
         else {
-            response.setStatus(401);
+            response.setStatus(403);
             throw new Exception("Not authorized, token failed");
         }
         String decodedEmail = utils.validateToken(token);
 
         if(decodedEmail == null) {
-            response.setStatus(401);
+            response.setStatus(403);
             throw new Exception("Not authorized, token failed");
         }
 

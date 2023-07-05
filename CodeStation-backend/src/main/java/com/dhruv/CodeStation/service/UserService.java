@@ -9,4 +9,6 @@ import com.dhruv.CodeStation.response.RegisterResponse;
 public interface UserService {
     public RegisterResponse registerUser(UserDTO user);
     public LoginResponse loginUser(UserDTO user);
+
+    public String convertToAdmin(int userId);
 }

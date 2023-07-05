@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserServiceImplementation implements UserService{
 
@@ -54,6 +56,19 @@ public class UserServiceImplementation implements UserService{
         }
 
         return new LoginResponse(userExists.getName(), userExists.getEmail(), userExists.getPic(), utils.generateToken(userExists.getEmail()), "success", "ok");
+    }
+
+    public String convertToAdmin(int userId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        if(!userOptional.isPresent()) {
+            return "User does not exist!";
+        }
+
+        User user = userOptional.get();
+        user.setAdmin(true);
+        userRepository.save(user);
+
+        return "User successfully converted to Admin!";
     }
 
 }

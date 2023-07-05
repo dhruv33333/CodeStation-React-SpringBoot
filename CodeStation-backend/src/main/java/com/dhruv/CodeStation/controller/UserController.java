@@ -48,4 +48,13 @@ public class UserController {
         LoginResponse res = userService.loginUser(user);
         return ResponseEntity.status(200).body(res);
     }
+
+    @PatchMapping("/convert-admin")
+    public ResponseEntity<String> convertToAdmin(@RequestParam("userId") int userId) {
+        String res = userService.convertToAdmin(userId);
+        if(res.equals("User does not exist!")) {
+            return ResponseEntity.status(400).body(res);
+        }
+        return ResponseEntity.status(200).body(res);
+    }
 }
