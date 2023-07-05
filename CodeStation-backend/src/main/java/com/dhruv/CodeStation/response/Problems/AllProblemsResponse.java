@@ -1,4 +1,4 @@
-package com.dhruv.CodeStation.response;
+package com.dhruv.CodeStation.response.Problems;
 
 import com.dhruv.CodeStation.model.Problem;
 

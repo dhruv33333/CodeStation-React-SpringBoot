@@ -1,7 +1,9 @@
 package com.dhruv.CodeStation.controller;
 
-import com.dhruv.CodeStation.response.AllProblemsResponse;
-import com.dhruv.CodeStation.response.ProblemResponse;
+import com.dhruv.CodeStation.DTO.ProblemDTO;
+import com.dhruv.CodeStation.response.Problems.AllProblemsResponse;
+import com.dhruv.CodeStation.response.Problems.ProblemResponse;
+import com.dhruv.CodeStation.response.StandardResponse;
 import com.dhruv.CodeStation.service.ProblemsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +31,9 @@ public class ProblemsController {
         return ResponseEntity.status(200).body(res);
     }
 
-//    @PostMapping("/add-problem")
-//    public ResponseEntity<>
+    @PostMapping("/add-problem")
+    public ResponseEntity<StandardResponse> addProblem(@RequestParam("userId") int userId, @RequestBody ProblemDTO problemDTO) {
+        StandardResponse res = problemsService.addProblem(userId, problemDTO);
+        return ResponseEntity.status(200).body(res);
+    }
 }

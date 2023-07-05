@@ -1,25 +1,9 @@
-package com.dhruv.CodeStation.response;
+package com.dhruv.CodeStation.DTO;
 
-public class Problem {
-    private int problemId;
+public class ProblemDTO {
     private String title, difficulty, acceptance, description, exampleIn, exampleOut;
 
-    public Problem(int problemId, String title, String difficulty, String acceptance, String description, String exampleIn, String exampleOut) {
-        this.problemId = problemId;
-        this.title = title;
-        this.difficulty = difficulty;
-        this.acceptance = acceptance;
-        this.description = description;
-        this.exampleIn = exampleIn;
-        this.exampleOut = exampleOut;
-    }
-
-    public int getProblemId() {
-        return problemId;
-    }
-
-    public void setProblemId(int problemId) {
-        this.problemId = problemId;
+    public ProblemDTO() {
     }
 
     public String getTitle() {

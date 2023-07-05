@@ -26,8 +26,6 @@ public class UserServiceImplementation implements UserService{
     @Override
     public RegisterResponse registerUser(UserDTO user) {
 
-        User res = userRepository.findByEmail(user.getEmail());
-
         if(userRepository.findByEmail(user.getEmail()) != null) {
             return new RegisterResponse("failure", "User with same email already registered");
         }
@@ -41,7 +39,12 @@ public class UserServiceImplementation implements UserService{
         // encoding the password
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        userRepository.save(newUser);
+        try {
+            userRepository.save(newUser);
+        } catch (Exception e){
+            return new RegisterResponse("failure", "Unable to connect to DB");
+        }
+
         return new RegisterResponse("ok", "User registered successfully");
     }
 
@@ -66,6 +69,11 @@ public class UserServiceImplementation implements UserService{
 
         User user = userOptional.get();
         user.setAdmin(true);
+        try {
+            userRepository.save(user);
+        } catch (Exception e){
+            return "Unable to connect to DB";
+        }
         userRepository.save(user);
 
         return "User successfully converted to Admin!";

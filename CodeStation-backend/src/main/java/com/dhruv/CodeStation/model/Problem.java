@@ -1,5 +1,6 @@
 package com.dhruv.CodeStation.model;
 
+import com.dhruv.CodeStation.DTO.ProblemDTO;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,6 +14,15 @@ public class Problem {
     private String title, difficulty, acceptance, description, exampleIn, exampleOut;
 
     public Problem() {
+    }
+
+    public Problem(ProblemDTO problemDTO) {
+        this.title = problemDTO.getTitle();
+        this.difficulty = problemDTO.getDifficulty();
+        this.acceptance = problemDTO.getAcceptance();
+        this.description = problemDTO.getDescription();
+        this.exampleIn = problemDTO.getExampleIn();
+        this.exampleOut = problemDTO.getExampleOut();
     }
 
     public int getId() {

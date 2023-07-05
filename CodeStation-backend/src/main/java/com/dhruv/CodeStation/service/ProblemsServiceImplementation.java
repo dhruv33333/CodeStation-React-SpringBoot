@@ -1,9 +1,13 @@
 package com.dhruv.CodeStation.service;
 
+import com.dhruv.CodeStation.DTO.ProblemDTO;
 import com.dhruv.CodeStation.model.Problem;
+import com.dhruv.CodeStation.model.User;
 import com.dhruv.CodeStation.repository.ProblemRepository;
-import com.dhruv.CodeStation.response.AllProblemsResponse;
-import com.dhruv.CodeStation.response.ProblemResponse;
+import com.dhruv.CodeStation.repository.UserRepository;
+import com.dhruv.CodeStation.response.Problems.AllProblemsResponse;
+import com.dhruv.CodeStation.response.Problems.ProblemResponse;
+import com.dhruv.CodeStation.response.StandardResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +20,10 @@ public class ProblemsServiceImplementation implements  ProblemsService{
     @Autowired
     private ProblemRepository problemRepository;
 
+    @Autowired
+    private UserRepository userRepository;
 
-    // hard code for now
-//    Problem[] problems = {new Problem(1, "201. Bitwise AND of Numbers Range", "Medium", "42%", "lorem ipsum blablalbalblalbalblalbal", "left = 5, right = 7", "4"),  new Problem(2, "201. Bitwise AND of Numbers Range", "Medium", "42%", "lorem ipsum blablalbalblalbalblalbal", "left = 5, right = 7", "4"), new Problem(3, "201. Bitwise AND of Numbers Range", "Medium", "42%", "lorem ipsum blablalbalblalbalblalbal", "left = 5, right = 7", "4"), new Problem(4, "201. Bitwise AND of Numbers Range", "Medium", "42%", "lorem ipsum blablalbalblalbalblalbal", "left = 5, right = 7", "4")};
+
     @Override
     public AllProblemsResponse getAllProblems() {
         List<Problem> problems = problemRepository.findAll();
@@ -42,5 +47,29 @@ public class ProblemsServiceImplementation implements  ProblemsService{
 
         Problem problem = problemOptional.get();
         return new ProblemResponse(problem, "success", "ok");
+    }
+
+    @Override
+    public StandardResponse addProblem(int userId, ProblemDTO problemDTO) {
+        Optional<User> userOptional = userRepository.findById(userId);
+
+        if(!userOptional.isPresent()) {
+            return new StandardResponse("failure", "User not found");
+        }
+
+        User user = userOptional.get();
+        if(!user.isAdmin()) {
+            return new StandardResponse("failure", "Permission denied!");
+        }
+
+        Problem problem = new Problem(problemDTO);
+
+        try {
+            problemRepository.save(problem);
+        } catch (Exception e){
+            return new StandardResponse("failure", "Unable to connect to DB");
+        }
+
+        return new StandardResponse("success", "Problem successfully added!");
     }
 }
