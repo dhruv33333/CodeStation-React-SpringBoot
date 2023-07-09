@@ -12,7 +12,7 @@ public class User {
     private int id;
 
     @NaturalId
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false, unique = true)
     private String email;
     private String name, pic, password;
 
