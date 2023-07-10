@@ -9,5 +9,5 @@ public interface SubmissionRepository extends JpaRepository<Submission, Integer>
 
     Submission findByUserId(int userId);
     Submission findByProblemId(int problemId);
-    
+
 }

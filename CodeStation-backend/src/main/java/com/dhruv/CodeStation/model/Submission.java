@@ -11,18 +11,23 @@ public class Submission {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @NaturalId
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private int userId;
 
-    @NaturalId
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private int problemId;
 
     private boolean isAccepted;
     private String submissionCode;
 
     public Submission() {
+    }
+
+    public Submission(int userId, int problemId, boolean isAccepted, String submissionCode) {
+        this.userId = userId;
+        this.problemId = problemId;
+        this.isAccepted = isAccepted;
+        this.submissionCode = submissionCode;
     }
 
     public int getId() {
