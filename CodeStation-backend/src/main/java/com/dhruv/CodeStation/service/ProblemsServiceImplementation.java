@@ -31,10 +31,10 @@ public class ProblemsServiceImplementation implements  ProblemsService{
             return new AllProblemsResponse("failure", "Couldn't fetch problems", null);
         }
         if(problems.size() == 0) {
-            return new AllProblemsResponse("success", "No problems found", problems);
+            return new AllProblemsResponse("ok", "No problems found", problems);
         }
 
-        return new AllProblemsResponse("success", "Successfully fetched", problems);
+        return new AllProblemsResponse("ok", "Successfully fetched", problems);
     }
 
     @Override
@@ -70,6 +70,6 @@ public class ProblemsServiceImplementation implements  ProblemsService{
             return new StandardResponse("failure", "Unable to connect to DB");
         }
 
-        return new StandardResponse("success", "Problem successfully added!");
+        return new StandardResponse("ok", "Problem successfully added!");
     }
 }
