@@ -30,7 +30,7 @@ const AppHeader = () => {
     <Box
       height="72px"
       py={2}
-      px={16}
+      px={12}
       bg="#1E2D40"
       display="flex"
       alignItems="center"

@@ -43,7 +43,7 @@ const Login = () => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user) {
       console.log("User already logged in, redirecting to home page");
-      history.push("/home");
+      history.push("/explore");
     }
   }, []);
 
@@ -86,7 +86,7 @@ const Login = () => {
         localStorage.setItem("user", stringData);
 
         setUser(res.data);
-        history.push("/home");
+        history.push("/explore");
       } else {
         toast({
           title: res.message,
