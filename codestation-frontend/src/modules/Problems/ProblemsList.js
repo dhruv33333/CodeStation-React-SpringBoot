@@ -15,7 +15,7 @@ import {
   TableContainer,
 } from "@chakra-ui/react";
 
-const AllProblems = () => {
+const ProblemsList = () => {
   const [problems, setProblems] = useState(null);
   const { user } = useAppContext();
 
@@ -65,4 +65,4 @@ const AllProblems = () => {
   );
 };
 
-export default AllProblems;
+export default ProblemsList;
