@@ -22,7 +22,7 @@ const AppProvider = ({ children }) => {
 
   return (
     <AppContext.Provider value={{ user, setUser }}>
-      {children}
+      {user && children}
     </AppContext.Provider>
   );
 };

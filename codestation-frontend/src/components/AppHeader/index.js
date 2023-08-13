@@ -27,9 +27,10 @@ import {
 import { NavLink, NavLinkWrapper } from "./styled";
 
 const navItems = [
-  { label: "Explore", link: "explore", slug: "explore" },
-  { label: "Problems", link: "problemset-all", slug: "problems" },
+  { label: "Explore", link: "/explore", slug: "explore" },
+  { label: "Problems", link: "/problemset-all", slug: "problems" },
 ];
+
 const AppHeader = () => {
   const { user } = useAppContext();
   const history = useHistory();
@@ -44,7 +45,9 @@ const AppHeader = () => {
 
   useEffect(() => {
     const currentUrl = pathname.split("/")[1];
-    const selectedTab = navItems.find((item) => item.link === currentUrl);
+    const selectedTab = navItems.find(
+      (item) => item.link.split("/")[1] === currentUrl
+    );
     if (selectedTab) {
       setSelectedTab(selectedTab);
     }
