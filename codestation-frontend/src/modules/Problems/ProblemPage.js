@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 // context
 import { useAppContext } from "../../contexts/AppProvider";
 
 // components
-import { Badge, Box, Heading, Text, Textarea, Button } from "@chakra-ui/react";
+import {
+  Badge,
+  Box,
+  Heading,
+  Text,
+  Textarea,
+  Button,
+  useToast,
+} from "@chakra-ui/react";
 
 const difficultyColorMap = {
   Easy: "green",
@@ -16,6 +24,8 @@ const difficultyColorMap = {
 const ProblemPage = () => {
   const { id } = useParams();
   const { user } = useAppContext();
+  const history = useHistory();
+  const toast = useToast();
   const [problem, setProblem] = useState(null);
   const [code, setCode] = useState("");
 
@@ -48,7 +58,32 @@ const ProblemPage = () => {
     const resJson = await res.json();
 
     if (resJson?.status === "ok") {
-      // redirect to submissions page if accepted is true
+      if (resJson?.accepted) {
+        toast({
+          title: "Solution Accepted",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom-left",
+        });
+        history.push(`/submissions/${id}`);
+      } else {
+        toast({
+          title: "Solution wasn't able to pass all test cases",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom-left",
+        });
+      }
+    } else {
+      toast({
+        title: "Unable to submit at the moment",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-left",
+      });
     }
   };
 
