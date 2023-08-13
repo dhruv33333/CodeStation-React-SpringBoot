@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { useAppContext } from "../../contexts/AppProvider";
 
 // components
-import { Badge, Box, Heading, Text, Textarea } from "@chakra-ui/react";
+import { Badge, Box, Heading, Text, Textarea, Button } from "@chakra-ui/react";
 
 const difficultyColorMap = {
   Easy: "green",
@@ -34,8 +34,26 @@ const ProblemPage = () => {
     }
   };
 
+  const handleSubmit = async () => {
+    const reqBody = { userId: user?.id, problemId: id, submissionCode: code };
+    const res = await fetch("/submission/add", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${user?.token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(reqBody),
+    });
+
+    const resJson = await res.json();
+
+    if (resJson?.status === "ok") {
+      // redirect to submissions page if accepted is true
+    }
+  };
+
   useEffect(() => {
-    fetchProgram();
+    if (!problem) fetchProgram();
   }, [user]);
 
   return (
@@ -65,6 +83,18 @@ const ProblemPage = () => {
           height="50vh"
           border="2px solid gray"
         />
+
+        <Box>
+          <Button
+            bg="#1E2D40"
+            color="white"
+            width="100%"
+            _hover={{ opacity: "0.9" }}
+            onClick={handleSubmit}
+          >
+            Submit
+          </Button>
+        </Box>
       </Box>
     </Box>
   );

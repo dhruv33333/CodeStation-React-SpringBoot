@@ -110,7 +110,7 @@ const AppHeader = () => {
                     color="white"
                     width="100%"
                     borderRadius={0}
-                    _hover={{ opacity: "0.7" }}
+                    _hover={{ opacity: "0.9" }}
                     onClick={handleLogout}
                   >
                     Sign Out
