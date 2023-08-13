@@ -1,13 +1,16 @@
 package com.dhruv.CodeStation.response.Users;
 
 class Data {
+
+     int id;
      String name, email, token, pic;
 
-    public Data(String name, String email, String pic, String token) {
+    public Data(String name, String email, String pic, String token, int id) {
         this.name = name;
         this.email = email;
         this.pic = pic;
         this.token = token;
+        this.id = id;
     }
 
     public String getName() {
@@ -41,6 +44,14 @@ class Data {
     public void setPic(String pic) {
         this.pic = pic;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }
 
 public class LoginResponse {
@@ -49,8 +60,8 @@ public class LoginResponse {
     Data data;
 
 
-    public LoginResponse(String name, String email, String pic, String token, String message, String status) {
-        data = new Data(name,email,pic,token);
+    public LoginResponse(String name, String email, String pic, String token, String message, String status, int id) {
+        data = new Data(name,email,pic,token, id);
         this.message=message;
         this.status = status;
     }
