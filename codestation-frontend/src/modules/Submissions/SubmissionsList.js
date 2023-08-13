@@ -31,7 +31,7 @@ const SubmissionsList = () => {
   };
 
   useEffect(() => {
-    fetchSubmissions();
+    if (!submissions) fetchSubmissions();
   }, [user]);
 
   return (

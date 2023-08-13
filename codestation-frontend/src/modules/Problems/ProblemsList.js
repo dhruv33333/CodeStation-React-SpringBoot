@@ -31,7 +31,7 @@ const ProblemsList = () => {
   };
 
   useEffect(() => {
-    getAllPrograms();
+    if (!problems) getAllPrograms();
   }, [user]);
 
   return (

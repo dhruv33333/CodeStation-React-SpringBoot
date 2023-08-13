@@ -129,6 +129,13 @@ const ProblemPage = () => {
           >
             Submit
           </Button>
+          <Button
+            width="100%"
+            mt="8px"
+            onClick={() => history.push(`/submissions/${id}`)}
+          >
+            View All Submissions
+          </Button>
         </Box>
       </Box>
     </Box>
