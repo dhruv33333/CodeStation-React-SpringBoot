@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+// assets
+import { AiOutlineCheck } from "react-icons/ai";
+
 // context
 import { useAppContext } from "../../contexts/AppProvider";
 
@@ -21,6 +24,7 @@ import {
 
 const ProblemsList = () => {
   const [problems, setProblems] = useState(null);
+  const [allSubmissions, setAllSubmissions] = useState(null);
   const { user } = useAppContext();
 
   const getAllPrograms = async () => {
@@ -34,8 +38,23 @@ const ProblemsList = () => {
     }
   };
 
+  const getAllSubmissions = async () => {
+    const res = await fetch("/submission/getSubmissionsInfo", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${user?.token}`,
+      },
+    });
+
+    const resJson = await res.json();
+    if (resJson?.status === "ok") {
+      setAllSubmissions(resJson?.submissions);
+    }
+  };
+
   useEffect(() => {
-    if (!problems) getAllPrograms();
+    if (!problems && user) getAllPrograms();
+    if (!allSubmissions && user) getAllSubmissions();
   }, [user]);
 
   return (
@@ -51,10 +70,17 @@ const ProblemsList = () => {
         </Thead>
         <Tbody>
           {problems?.map((problem) => {
-            // To-Do add status logic
+            let isProblemSolved = false;
+            allSubmissions?.forEach((s) => {
+              if (s?.problemId === problem?.id && s?.accepted) {
+                isProblemSolved = true;
+              }
+            });
+            const status = isProblemSolved ? <AiOutlineCheck /> : "--";
+
             return (
               <Tr>
-                <Td>status</Td>
+                <Td>{status}</Td>
                 <Td>
                   <Link to={`/problem/${problem?.id}`}>{problem?.title}</Link>
                 </Td>
