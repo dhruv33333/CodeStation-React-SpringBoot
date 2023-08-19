@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface SubmissionRepository extends JpaRepository<Submission, Integer> {
 
-    Submission findByUserId(int userId);
+    List<Submission> findByUserId(int userId);
     Submission findByProblemId(int problemId);
 
     List<Submission> findByUserIdAndProblemId(int userId, int problemId);

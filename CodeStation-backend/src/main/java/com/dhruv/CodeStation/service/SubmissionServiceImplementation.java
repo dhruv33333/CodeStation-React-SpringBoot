@@ -4,6 +4,7 @@ import com.dhruv.CodeStation.model.Problem;
 import com.dhruv.CodeStation.model.Submission;
 import com.dhruv.CodeStation.repository.SubmissionRepository;
 import com.dhruv.CodeStation.response.Submissions.AddSubmissionResponse;
+import com.dhruv.CodeStation.response.Submissions.AllSubmissionsForUserResponse;
 import com.dhruv.CodeStation.response.Submissions.SubmissionsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,6 @@ public class SubmissionServiceImplementation implements SubmissionService {
 
     @Override
     public SubmissionsResponse getSubmissionsForProblem(int userId, int problemId) {
-
         try {
             List<Submission> submissions = submissionRepository.findByUserIdAndProblemId(userId, problemId);
             SubmissionsResponse res = new SubmissionsResponse("ok", "Submissions fetched successfully", submissions);
@@ -43,5 +43,16 @@ public class SubmissionServiceImplementation implements SubmissionService {
             return new SubmissionsResponse("failure", "Unable to fetch submissions", null);
         }
 
+    }
+
+    @Override
+    public AllSubmissionsForUserResponse getAllSubmissionsForUser(int userId) {
+        try {
+            List<Submission> submissions = submissionRepository.findByUserId(userId);
+            AllSubmissionsForUserResponse res = new AllSubmissionsForUserResponse("ok", "Submissions fetched successfully", submissions);
+            return res;
+        } catch (Exception e) {
+            return new AllSubmissionsForUserResponse("failure", "Unable to fetch submissions", null);
+        }
     }
 }

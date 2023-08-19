@@ -1,9 +1,12 @@
 package com.dhruv.CodeStation.controller;
 
 import com.dhruv.CodeStation.DTO.SubmissionDTO;
+import com.dhruv.CodeStation.model.User;
 import com.dhruv.CodeStation.response.Submissions.AddSubmissionResponse;
+import com.dhruv.CodeStation.response.Submissions.AllSubmissionsForUserResponse;
 import com.dhruv.CodeStation.response.Submissions.SubmissionsResponse;
 import com.dhruv.CodeStation.service.SubmissionService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,4 +30,12 @@ public class SubmissionsController {
         SubmissionsResponse res = submissionService.getSubmissionsForProblem(userId, id);
         return ResponseEntity.status(200).body(res);
     }
+
+    @GetMapping("/getSubmissionsInfo")
+    public ResponseEntity<AllSubmissionsForUserResponse> getAllSubmissionsForUser(HttpServletRequest request) {
+        User loggedUser = (User) request.getAttribute("user");
+        AllSubmissionsForUserResponse res = submissionService.getAllSubmissionsForUser(loggedUser.getId());
+        return ResponseEntity.status(200).body(res);
+    }
+
 }
