@@ -58,7 +58,7 @@ const SubmissionsList = () => {
               <Box
                 border="1px solid black"
                 borderRadius="8px"
-                width="40vw"
+                width="60vw"
                 height="40vh"
                 padding="20px"
                 overflow="auto"

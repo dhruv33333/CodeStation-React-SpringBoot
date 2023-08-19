@@ -4,6 +4,9 @@ import { useHistory, useParams } from "react-router-dom";
 // context
 import { useAppContext } from "../../contexts/AppProvider";
 
+// consts
+import { difficultyColorMap } from "./consts";
+
 // components
 import {
   Badge,
@@ -14,12 +17,6 @@ import {
   Button,
   useToast,
 } from "@chakra-ui/react";
-
-const difficultyColorMap = {
-  Easy: "green",
-  Medium: "yellow",
-  Hard: "red",
-};
 
 const ProblemPage = () => {
   const { id } = useParams();

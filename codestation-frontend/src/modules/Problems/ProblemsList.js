@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 // context
 import { useAppContext } from "../../contexts/AppProvider";
 
+// consts
+import { difficultyColorMap } from "./consts";
+
 // components
 import {
   Table,
@@ -13,6 +16,7 @@ import {
   Th,
   Td,
   TableContainer,
+  Badge,
 } from "@chakra-ui/react";
 
 const ProblemsList = () => {
@@ -55,7 +59,11 @@ const ProblemsList = () => {
                   <Link to={`/problem/${problem?.id}`}>{problem?.title}</Link>
                 </Td>
                 <Td>{problem?.acceptance}</Td>
-                <Td>{problem?.difficulty}</Td>
+                <Td>
+                  <Badge colorScheme={difficultyColorMap[problem?.difficulty]}>
+                    {problem?.difficulty}
+                  </Badge>
+                </Td>
               </Tr>
             );
           })}
