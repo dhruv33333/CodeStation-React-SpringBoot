@@ -1,5 +1,6 @@
 package com.dhruv.CodeStation.model;
 
+import com.dhruv.CodeStation.DTO.DriverCodeDTO;
 import com.dhruv.CodeStation.DTO.ProblemDTO;
 import jakarta.persistence.*;
 
@@ -12,6 +13,10 @@ public class Problem {
     private int id;
 
     private String title, difficulty, acceptance, description, exampleIn, exampleOut;
+    private int totalTestcases;
+
+    @Column(length = 65555)
+    private String javaDriverCode, cppDriverCode;
 
     public Problem() {
     }
@@ -23,6 +28,9 @@ public class Problem {
         this.description = problemDTO.getDescription();
         this.exampleIn = problemDTO.getExampleIn();
         this.exampleOut = problemDTO.getExampleOut();
+        this.javaDriverCode = problemDTO.getDriverCode().getJava();
+        this.cppDriverCode = problemDTO.getDriverCode().getCpp();
+        this.totalTestcases = problemDTO.getTotalTestcases();
     }
 
     public int getId() {
@@ -79,5 +87,29 @@ public class Problem {
 
     public void setExampleOut(String exampleOut) {
         this.exampleOut = exampleOut;
+    }
+
+    public int getTotalTestcases() {
+        return totalTestcases;
+    }
+
+    public void setTotalTestcases(int totalTestcases) {
+        this.totalTestcases = totalTestcases;
+    }
+
+    public String getJavaDriverCode() {
+        return javaDriverCode;
+    }
+
+    public void setJavaDriverCode(String javaDriverCode) {
+        this.javaDriverCode = javaDriverCode;
+    }
+
+    public String getCppDriverCode() {
+        return cppDriverCode;
+    }
+
+    public void setCppDriverCode(String cppDriverCode) {
+        this.cppDriverCode = cppDriverCode;
     }
 }

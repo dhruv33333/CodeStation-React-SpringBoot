@@ -2,6 +2,8 @@ package com.dhruv.CodeStation.DTO;
 
 public class ProblemDTO {
     private String title, difficulty, acceptance, description, exampleIn, exampleOut;
+    private int totalTestcases;
+    private DriverCodeDTO driverCodeDTO;
 
     public ProblemDTO() {
     }
@@ -52,5 +54,21 @@ public class ProblemDTO {
 
     public void setExampleOut(String exampleOut) {
         this.exampleOut = exampleOut;
+    }
+
+    public int getTotalTestcases() {
+        return totalTestcases;
+    }
+
+    public void setTotalTestcases(int totalTestcases) {
+        this.totalTestcases = totalTestcases;
+    }
+
+    public DriverCodeDTO getDriverCode() {
+        return driverCodeDTO;
+    }
+
+    public void setDriverCode(DriverCodeDTO driverCode) {
+        this.driverCodeDTO = driverCode;
     }
 }
