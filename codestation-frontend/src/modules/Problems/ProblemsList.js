@@ -20,6 +20,7 @@ import {
   Td,
   TableContainer,
   Badge,
+  Heading,
 } from "@chakra-ui/react";
 
 const ProblemsList = () => {
@@ -59,6 +60,7 @@ const ProblemsList = () => {
 
   return (
     <TableContainer>
+      <Heading mb="20px">Problems List</Heading>
       <Table variant="striped" colorScheme="gray">
         <Thead>
           <Tr>
@@ -80,7 +82,7 @@ const ProblemsList = () => {
 
             return (
               <Tr>
-                <Td>{status}</Td>
+                <Td width="32px">{status}</Td>
                 <Td>
                   <Link to={`/problem/${problem?.id}`}>{problem?.title}</Link>
                 </Td>

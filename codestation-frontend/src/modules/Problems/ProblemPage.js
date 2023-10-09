@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import axios from "axios";
 
 // context
 import { useAppContext } from "../../contexts/AppProvider";
@@ -41,8 +42,16 @@ const ProblemPage = () => {
     }
   };
 
+  console.log({ code }, btoa(code));
+
   const handleSubmit = async () => {
-    const reqBody = { userId: user?.id, problemId: id, submissionCode: code };
+    checkSubmission();
+
+    const reqBody = {
+      userId: user?.id,
+      problemId: id,
+      submissionCode: btoa(code),
+    };
     const res = await fetch("/submission/add", {
       method: "POST",
       headers: {
@@ -76,6 +85,51 @@ const ProblemPage = () => {
     } else {
       toast({
         title: "Unable to submit at the moment",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-left",
+      });
+    }
+  };
+
+  const checkSubmission = async () => {
+    const judge0BaseUrl = "https://judge0-ce.p.rapidapi.com/submissions";
+    const headers = {
+      "X-RapidAPI-Key": "21ed8680a6msh370ddf6e284eaa5p1346e0jsnb28f26e4ac7d", // To-Do make this api call from backend so token is hidden
+      "X-RapidAPI-Host": "judge0-ce.p.rapidapi.com",
+      "Content-Type": "application/json",
+    };
+
+    try {
+      const res = await axios({
+        method: "post",
+        url: `https://judge0-ce.p.rapidapi.com/submissions?base64_encoded=true&fields=*`,
+        data: {
+          language_id: 91, // To-Do this is C++, figure out how to do for other lang
+          source_code: btoa(code), // encoding code to base64
+          stdin: btoa("codestation"),
+        },
+        headers: headers,
+      });
+      if (res?.data?.token) {
+        let isProcessing = true;
+        while (isProcessing) {
+          await new Promise((resolve) => setTimeout(resolve, 2000));
+          const res2 = await axios({
+            method: "get",
+            url: `${judge0BaseUrl}/${res?.data?.token}?base64_encoded=false&fields=*`,
+            headers: headers,
+          });
+          if (res2?.data?.status?.description !== "Processing") {
+            isProcessing = false;
+          }
+          console.log({ res2 });
+        }
+      }
+    } catch (error) {
+      toast({
+        title: "There was an error while submitting the problem!",
         status: "error",
         duration: 5000,
         isClosable: true,
@@ -122,7 +176,7 @@ const ProblemPage = () => {
             color="white"
             width="100%"
             _hover={{ opacity: "0.9" }}
-            onClick={handleSubmit}
+            onClick={checkSubmission}
           >
             Submit
           </Button>
