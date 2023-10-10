@@ -6,6 +6,8 @@ public class SubmissionDTO {
 
     private String submissionCode;
 
+    private boolean accepted;
+
     public int getUserId() {
         return userId;
     }
@@ -28,5 +30,13 @@ public class SubmissionDTO {
 
     public void setSubmissionCode(String submissionCode) {
         this.submissionCode = submissionCode;
+    }
+
+    public boolean getAccepted() {
+        return accepted;
+    }
+
+    public void setAccepted(boolean accepted) {
+        this.accepted = accepted;
     }
 }

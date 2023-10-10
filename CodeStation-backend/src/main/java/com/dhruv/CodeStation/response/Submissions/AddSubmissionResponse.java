@@ -5,7 +5,7 @@ import com.dhruv.CodeStation.response.StandardResponse;
 public class AddSubmissionResponse extends StandardResponse {
 
     boolean isAccepted;
-    public AddSubmissionResponse(String status, String message, Boolean isAccepted) {
+    public AddSubmissionResponse(String status, String message, boolean isAccepted) {
         super.setStatus(status);
         super.setMessage(message);
         this.isAccepted = isAccepted;

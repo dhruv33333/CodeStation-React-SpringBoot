@@ -20,10 +20,7 @@ public class SubmissionServiceImplementation implements SubmissionService {
     private SubmissionRepository submissionRepository;
 
     @Override
-    public AddSubmissionResponse addSubmission(int userId, int problemId, String submissionCode) {
-        Random rand = new Random();
-        int tempTester = rand.nextInt(2);
-        boolean isAccepted = tempTester == 0 ? false : true;
+    public AddSubmissionResponse addSubmission(int userId, int problemId, String submissionCode, boolean isAccepted) {
         try {
             Submission submission = new Submission(userId, problemId,  isAccepted, submissionCode);
             submissionRepository.save(submission);

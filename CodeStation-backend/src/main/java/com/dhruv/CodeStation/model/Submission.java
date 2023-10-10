@@ -18,6 +18,8 @@ public class Submission {
     private int problemId;
 
     private boolean isAccepted;
+
+    @Column(length = 65555)
     private String submissionCode;
 
     public Submission() {

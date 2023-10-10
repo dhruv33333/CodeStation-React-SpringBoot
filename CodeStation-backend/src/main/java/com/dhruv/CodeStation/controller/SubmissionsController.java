@@ -21,7 +21,7 @@ public class SubmissionsController {
 
     @PostMapping("/add")
     public ResponseEntity<AddSubmissionResponse> addSubmission(@RequestBody SubmissionDTO submissionDTO) {
-        AddSubmissionResponse res = submissionService.addSubmission(submissionDTO.getUserId(), submissionDTO.getProblemId(), submissionDTO.getSubmissionCode());
+        AddSubmissionResponse res = submissionService.addSubmission(submissionDTO.getUserId(), submissionDTO.getProblemId(), submissionDTO.getSubmissionCode(), submissionDTO.getAccepted());
         return ResponseEntity.status(200).body(res);
     }
 
