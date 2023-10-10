@@ -27,8 +27,14 @@ const ProblemPage = () => {
   const [problem, setProblem] = useState(null);
   const [code, setCode] = useState("");
 
-  const { title, difficulty, description, exampleIn, exampleOut } =
-    problem || {};
+  const {
+    title,
+    difficulty,
+    description,
+    exampleIn,
+    exampleOut,
+    totalTestcases,
+  } = problem || {};
 
   const fetchProgram = async () => {
     const res = await fetch(`/problem/${id}`, {
@@ -39,18 +45,24 @@ const ProblemPage = () => {
     const resJson = await res.json();
     if (resJson?.status === "ok") {
       setProblem(resJson?.data);
+      setCode(resJson?.data?.javaDriverCode);
     }
   };
 
   console.log({ code }, btoa(code));
 
   const handleSubmit = async () => {
-    checkSubmission();
-
+    const codeResult = await checkSubmission();
+    const testcasesPassed = codeResult?.stdout?.split(" ")[0];
+    console.log(
+      { testcasesPassed, totalTestcases },
+      Number(testcasesPassed) === totalTestcases
+    );
     const reqBody = {
       userId: user?.id,
       problemId: id,
       submissionCode: btoa(code),
+      accepted: Number(testcasesPassed) === totalTestcases,
     };
     const res = await fetch("/submission/add", {
       method: "POST",
@@ -104,9 +116,9 @@ const ProblemPage = () => {
     try {
       const res = await axios({
         method: "post",
-        url: `https://judge0-ce.p.rapidapi.com/submissions?base64_encoded=true&fields=*`,
+        url: `${judge0BaseUrl}?base64_encoded=true&fields=*`,
         data: {
-          language_id: 91, // To-Do this is C++, figure out how to do for other lang
+          language_id: 91, // To-Do this is java, figure out how to do for other lang
           source_code: btoa(code), // encoding code to base64
           stdin: btoa("codestation"),
         },
@@ -123,6 +135,7 @@ const ProblemPage = () => {
           });
           if (res2?.data?.status?.description !== "Processing") {
             isProcessing = false;
+            return res2?.data;
           }
           console.log({ res2 });
         }
@@ -176,7 +189,7 @@ const ProblemPage = () => {
             color="white"
             width="100%"
             _hover={{ opacity: "0.9" }}
-            onClick={checkSubmission}
+            onClick={handleSubmit}
           >
             Submit
           </Button>

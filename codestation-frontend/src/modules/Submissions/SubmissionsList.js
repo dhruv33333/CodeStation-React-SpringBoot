@@ -26,7 +26,8 @@ const SubmissionsList = () => {
 
     const resJson = await res.json();
     if (resJson?.status === "ok") {
-      setSubmissions(resJson?.submissions);
+      const submissions = resJson?.submissions?.reverse();
+      setSubmissions(submissions);
     }
   };
 
@@ -63,7 +64,7 @@ const SubmissionsList = () => {
                 padding="20px"
                 overflow="auto"
               >
-                {submission?.submissionCode}
+                {atob(submission?.submissionCode)}
               </Box>
             </TabPanel>
           ))}
