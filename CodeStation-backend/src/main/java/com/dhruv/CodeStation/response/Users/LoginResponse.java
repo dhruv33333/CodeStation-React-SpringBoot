@@ -5,12 +5,15 @@ class Data {
      int id;
      String name, email, token, pic;
 
-    public Data(String name, String email, String pic, String token, int id) {
+     boolean isAdmin;
+
+    public Data(String name, String email, String pic, String token, int id, boolean isAdmin) {
         this.name = name;
         this.email = email;
         this.pic = pic;
         this.token = token;
         this.id = id;
+        this.isAdmin = isAdmin;
     }
 
     public String getName() {
@@ -52,6 +55,14 @@ class Data {
     public void setId(int id) {
         this.id = id;
     }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
 }
 
 public class LoginResponse {
@@ -60,8 +71,8 @@ public class LoginResponse {
     Data data;
 
 
-    public LoginResponse(String name, String email, String pic, String token, String message, String status, int id) {
-        data = new Data(name,email,pic,token, id);
+    public LoginResponse(int id, String name, String email, String pic, String token, boolean isAdmin, String message, String status) {
+        data = new Data(name,email,pic,token, id, isAdmin);
         this.message=message;
         this.status = status;
     }

@@ -58,7 +58,7 @@ public class UserServiceImplementation implements UserService{
             return new LoginResponse("Incorrect password!", "failure");
         }
 
-        return new LoginResponse(userExists.getName(), userExists.getEmail(), userExists.getPic(), utils.generateToken(userExists.getEmail()), "success", "ok", userExists.getId());
+        return new LoginResponse(userExists.getId(), userExists.getName(), userExists.getEmail(), userExists.getPic(), utils.generateToken(userExists.getEmail()), userExists.isAdmin(), "success", "ok");
     }
 
     public String convertToAdmin(int userId) {
