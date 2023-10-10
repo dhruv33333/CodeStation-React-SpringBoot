@@ -9,15 +9,9 @@ import { useAppContext } from "../../contexts/AppProvider";
 import { difficultyColorMap } from "./consts";
 
 // components
-import {
-  Badge,
-  Box,
-  Heading,
-  Text,
-  Textarea,
-  Button,
-  useToast,
-} from "@chakra-ui/react";
+import CodeMirror from "@uiw/react-codemirror";
+import { java } from "@codemirror/lang-java";
+import { Badge, Box, Heading, Text, Button, useToast } from "@chakra-ui/react";
 
 const ProblemPage = () => {
   const { id } = useParams();
@@ -174,13 +168,13 @@ const ProblemPage = () => {
       </Box>
       <Box display="flex" flexDirection="column" w="55%" gap="24px">
         <Heading>Code Here</Heading>
-        <Textarea
-          placeholder="Happy Coding!"
+
+        <CodeMirror
           value={code}
-          onChange={(e) => setCode(e.target.value)}
-          w="100%"
           height="50vh"
-          border="2px solid gray"
+          theme="dark"
+          extensions={[java()]}
+          onChange={(value) => setCode(value)}
         />
 
         <Box>

@@ -5,11 +5,13 @@
   "proxy": "http://127.0.0.1:8080",
   "dependencies": {
     "@chakra-ui/react": "^2.7.1",
+    "@codemirror/lang-java": "^6.0.1",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@uiw/react-codemirror": "^4.21.19",
     "axios": "^1.5.1",
     "framer-motion": "^10.12.17",
     "react": "^18.2.0",

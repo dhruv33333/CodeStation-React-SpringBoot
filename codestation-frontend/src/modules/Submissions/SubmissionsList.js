@@ -3,6 +3,9 @@ import { useParams } from "react-router-dom";
 
 // context
 import { useAppContext } from "../../contexts/AppProvider";
+
+// components
+import CodeMirror from "@uiw/react-codemirror";
 import {
   Heading,
   Tab,
@@ -10,7 +13,6 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
-  Box,
 } from "@chakra-ui/react";
 
 const SubmissionsList = () => {
@@ -56,16 +58,14 @@ const SubmissionsList = () => {
         <TabPanels>
           {submissions?.map((submission) => (
             <TabPanel>
-              <Box
-                border="1px solid black"
-                borderRadius="8px"
+              <CodeMirror
+                value={atob(submission?.submissionCode)}
+                height="fit-content"
+                maxHeight="70vh"
                 width="60vw"
-                height="40vh"
-                padding="20px"
-                overflow="auto"
-              >
-                {atob(submission?.submissionCode)}
-              </Box>
+                theme="dark"
+                editable={false}
+              />
             </TabPanel>
           ))}
         </TabPanels>
