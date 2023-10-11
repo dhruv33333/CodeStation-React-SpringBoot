@@ -1,4 +1,8 @@
 import React, { useState } from "react";
+import axios from "axios";
+
+// context
+import { useAppContext } from "../../contexts/AppProvider";
 
 // components
 import { Box, Button, Heading, Input, useToast } from "@chakra-ui/react";
@@ -11,6 +15,7 @@ import { InputWrapper, GridWrapper, Divider, CodeWrapper } from "./styled";
 
 const AddProblemForm = () => {
   const toast = useToast();
+  const { user } = useAppContext();
   const [driverCode, setDriverCode] = useState({ java: "", cpp: "" });
   const [formObj, setFormObj] = useState({});
 
@@ -19,9 +24,8 @@ const AddProblemForm = () => {
     info[key] = e.target.value;
     setFormObj(info);
   };
-  console.log({ formObj, driverCode });
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const {
       title,
       description,
@@ -51,6 +55,31 @@ const AddProblemForm = () => {
         position: "bottom-left",
       });
       return;
+    }
+
+    const reqObj = {
+      ...formObj,
+      driverCode: { java: btoa(driverCode?.java), cpp: btoa(driverCode?.cpp) },
+    };
+
+    const res = await axios({
+      method: "post",
+      url: `/problem/add-problem?userId=${user?.id}`,
+      data: reqObj,
+      headers: {
+        Authorization: `Bearer ${user?.token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (res?.data?.status === "ok") {
+      toast({
+        title: "Problem added successfully",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-left",
+      });
     }
   };
 
@@ -105,7 +134,7 @@ const AddProblemForm = () => {
             />
           </InputWrapper>
           <InputWrapper>
-            <p>Enter example Input</p>
+            <p>Enter example input</p>
             <Input
               type="text"
               placeholder="Example input"
@@ -113,7 +142,7 @@ const AddProblemForm = () => {
             />
           </InputWrapper>
           <InputWrapper>
-            <p>Enter example Output</p>
+            <p>Enter example output</p>
             <Input
               type="text"
               placeholder="Example output"

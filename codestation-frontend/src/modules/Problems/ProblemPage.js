@@ -39,17 +39,16 @@ const ProblemPage = () => {
     const resJson = await res.json();
     if (resJson?.status === "ok") {
       setProblem(resJson?.data);
-      setCode(resJson?.data?.javaDriverCode);
+
+      // decoding the base-64 string
+      setCode(atob(resJson?.data?.javaDriverCode));
     }
   };
 
   const handleSubmit = async () => {
     const codeResult = await checkSubmission();
     const testcasesPassed = codeResult?.stdout?.split(" ")[0];
-    console.log(
-      { testcasesPassed, totalTestcases },
-      Number(testcasesPassed) === totalTestcases
-    );
+
     const reqBody = {
       userId: user?.id,
       problemId: id,
