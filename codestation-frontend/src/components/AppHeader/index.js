@@ -26,11 +26,6 @@ import {
 // styles
 import { NavLink, NavLinkWrapper } from "./styled";
 
-const navItems = [
-  { label: "Explore", link: "/explore", slug: "explore" },
-  { label: "Problems", link: "/problemset-all", slug: "problems" },
-];
-
 const AppHeader = () => {
   const { user } = useAppContext();
   const history = useHistory();
@@ -52,6 +47,18 @@ const AppHeader = () => {
       setSelectedTab(selectedTab);
     }
   }, [pathname]);
+
+  const navItems = [
+    { label: "Explore", link: "/explore", slug: "explore" },
+    { label: "Problems", link: "/problemset-all", slug: "problems" },
+  ];
+  if (user?.admin) {
+    navItems.push({
+      label: "Add Problem",
+      link: "/admin/add-problem",
+      slug: "addProblem",
+    });
+  }
 
   return (
     <Box

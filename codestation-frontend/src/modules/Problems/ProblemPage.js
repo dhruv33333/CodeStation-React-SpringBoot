@@ -43,8 +43,6 @@ const ProblemPage = () => {
     }
   };
 
-  console.log({ code }, btoa(code));
-
   const handleSubmit = async () => {
     const codeResult = await checkSubmission();
     const testcasesPassed = codeResult?.stdout?.split(" ")[0];
