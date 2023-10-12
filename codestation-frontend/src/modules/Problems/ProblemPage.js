@@ -11,7 +11,16 @@ import { difficultyColorMap } from "./consts";
 // components
 import CodeMirror from "@uiw/react-codemirror";
 import { java } from "@codemirror/lang-java";
-import { Badge, Box, Heading, Text, Button, useToast } from "@chakra-ui/react";
+import { cpp } from "@codemirror/lang-cpp";
+import {
+  Badge,
+  Box,
+  Heading,
+  Text,
+  Button,
+  useToast,
+  Select,
+} from "@chakra-ui/react";
 
 const ProblemPage = () => {
   const { id } = useParams();
@@ -20,6 +29,7 @@ const ProblemPage = () => {
   const toast = useToast();
   const [problem, setProblem] = useState(null);
   const [code, setCode] = useState("");
+  const [selectedLanguage, setSelectedLanguage] = useState("java");
 
   const {
     title,
@@ -109,7 +119,7 @@ const ProblemPage = () => {
         method: "post",
         url: `${judge0BaseUrl}?base64_encoded=true&fields=*`,
         data: {
-          language_id: 91, // To-Do this is java, figure out how to do for other lang
+          language_id: selectedLanguage === "java" ? 91 : 54,
           source_code: btoa(code), // encoding code to base64
           stdin: btoa("codestation"),
         },
@@ -146,6 +156,15 @@ const ProblemPage = () => {
     if (!problem) fetchProgram();
   }, [user]);
 
+  useEffect(() => {
+    if (problem) {
+      if (selectedLanguage === "java") setCode(atob(problem?.javaDriverCode));
+      else setCode(atob(problem?.cppDriverCode));
+    }
+  }, [selectedLanguage]);
+
+  const editorLanguage = selectedLanguage === "java" ? java : cpp;
+
   return (
     <Box display="flex" justifyContent="space-between">
       <Box maxW="40%">
@@ -164,13 +183,26 @@ const ProblemPage = () => {
         </Box>
       </Box>
       <Box display="flex" flexDirection="column" w="55%" gap="24px">
-        <Heading>Code Here</Heading>
+        <Box display="flex" w="100%" alignItems="center">
+          <Heading>Code Here</Heading>
+          <Select
+            onChange={(e) => {
+              setSelectedLanguage(e.target.value);
+            }}
+            value={selectedLanguage}
+            w="120px"
+            justifyContent="space-between"
+          >
+            <option value="java">Java</option>
+            <option value="cpp">C++</option>
+          </Select>
+        </Box>
 
         <CodeMirror
           value={code}
           height="50vh"
           theme="dark"
-          extensions={[java()]}
+          extensions={[editorLanguage()]}
           onChange={(value) => setCode(value)}
         />
 
