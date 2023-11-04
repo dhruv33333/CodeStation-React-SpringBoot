@@ -6,6 +6,7 @@ import ProblemsList from "../modules/Problems/ProblemsList";
 import ProblemPage from "../modules/Problems/ProblemPage";
 import SubmissionsList from "../modules/Submissions/SubmissionsList";
 import Admin from "../modules/Admin";
+import Explore from "../modules/Explore";
 import { AppHeader, NotFound } from "./index";
 import { Box } from "@chakra-ui/react";
 
@@ -16,7 +17,7 @@ const AppLayout = () => {
       <Box p={16}>
         <Switch>
           <Route path="/admin" component={Admin} />
-          <Route path="/explore" component={() => <div>explore</div>} exact />
+          <Route path="/explore" component={() => <Explore />} exact />
           <Route path="/problemset-all" component={ProblemsList} exact />
           <Route path="/problem/:id" component={ProblemPage} exact />
           <Route path="/submissions/:id" component={SubmissionsList} exact />
