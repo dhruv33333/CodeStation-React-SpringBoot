@@ -194,7 +194,12 @@ const ProblemPage = () => {
         </Box>
       </Box>
       <Box display="flex" flexDirection="column" w="55%" gap="24px">
-        <Box display="flex" w="100%" alignItems="center">
+        <Box
+          display="flex"
+          w="100%"
+          alignItems="center"
+          justifyContent="space-between"
+        >
           <Heading>Code Here</Heading>
           <Select
             onChange={(e) => {
