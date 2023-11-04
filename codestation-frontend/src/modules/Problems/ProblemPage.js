@@ -9,6 +9,7 @@ import { useAppContext } from "../../contexts/AppProvider";
 import { difficultyColorMap } from "./consts";
 
 // components
+import { PageLoader } from "../../components";
 import CodeMirror from "@uiw/react-codemirror";
 import { java } from "@codemirror/lang-java";
 import { cpp } from "@codemirror/lang-cpp";
@@ -30,6 +31,8 @@ const ProblemPage = () => {
   const [problem, setProblem] = useState(null);
   const [code, setCode] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState("java");
+  const [isFetching, setIsFetching] = useState(false);
+  const [btnLoading, setBtnLoading] = useState(false);
 
   const {
     title,
@@ -41,6 +44,7 @@ const ProblemPage = () => {
   } = problem || {};
 
   const fetchProgram = async () => {
+    setIsFetching(true);
     const res = await fetch(`/problem/${id}`, {
       method: "GET",
       headers: { Authorization: `Bearer ${user?.token}` },
@@ -53,9 +57,11 @@ const ProblemPage = () => {
       // decoding the base-64 string
       setCode(atob(resJson?.data?.javaDriverCode));
     }
+    setIsFetching(false);
   };
 
   const handleSubmit = async () => {
+    setBtnLoading(true);
     const codeResult = await checkSubmission();
     const testcasesPassed = codeResult?.stdout?.split(" ")[0];
 
@@ -75,6 +81,7 @@ const ProblemPage = () => {
     });
 
     const resJson = await res.json();
+    setBtnLoading(false);
 
     if (resJson?.status === "ok") {
       if (resJson?.accepted) {
@@ -165,6 +172,10 @@ const ProblemPage = () => {
 
   const editorLanguage = selectedLanguage === "java" ? java : cpp;
 
+  if (isFetching) {
+    return <PageLoader />;
+  }
+
   return (
     <Box display="flex" justifyContent="space-between">
       <Box maxW="40%">
@@ -213,6 +224,7 @@ const ProblemPage = () => {
             width="100%"
             _hover={{ opacity: "0.9" }}
             onClick={handleSubmit}
+            isLoading={btnLoading}
           >
             Submit
           </Button>

@@ -14,13 +14,16 @@ import {
   TabPanels,
   Tabs,
 } from "@chakra-ui/react";
+import { EmptyState, PageLoader } from "../../components";
 
 const SubmissionsList = () => {
   const { user } = useAppContext();
   const { id } = useParams();
   const [submissions, setSubmissions] = useState();
+  const [isFetching, setIsFetching] = useState(false);
 
   const fetchSubmissions = async () => {
+    setIsFetching(true);
     const res = await fetch(`/submission/${id}?userId=${user?.id}`, {
       method: "GET",
       headers: { Authorization: `Bearer ${user?.token}` },
@@ -31,6 +34,7 @@ const SubmissionsList = () => {
       const submissions = resJson?.submissions?.reverse();
       setSubmissions(submissions);
     }
+    setIsFetching(false);
   };
 
   useEffect(() => {
@@ -40,36 +44,43 @@ const SubmissionsList = () => {
   return (
     <>
       <Heading mb="40px">Submissions</Heading>
-      <Tabs
-        defaultIndex={0}
-        display="flex"
-        width="100vw"
-        justifyContent="space-between"
-        gap="120px"
-      >
-        <TabList display="flex" flexDirection="column">
-          {submissions?.map((submission) => {
-            const isAccepted = submission.accepted;
-            return (
-              <Tab width="152px">{isAccepted ? "Accepted" : "Rejected"}</Tab>
-            );
-          })}
-        </TabList>
-        <TabPanels>
-          {submissions?.map((submission) => (
-            <TabPanel>
-              <CodeMirror
-                value={atob(submission?.submissionCode)}
-                height="fit-content"
-                maxHeight="70vh"
-                width="60vw"
-                theme="dark"
-                editable={false}
-              />
-            </TabPanel>
-          ))}
-        </TabPanels>
-      </Tabs>
+
+      {isFetching && <PageLoader />}
+      {!isFetching && submissions?.length === 0 && (
+        <EmptyState title="No submissions found for this problem." />
+      )}
+      {!isFetching && submissions?.length > 0 && (
+        <Tabs
+          defaultIndex={0}
+          display="flex"
+          width="100vw"
+          justifyContent="space-between"
+          gap="120px"
+        >
+          <TabList display="flex" flexDirection="column">
+            {submissions?.map((submission) => {
+              const isAccepted = submission.accepted;
+              return (
+                <Tab width="152px">{isAccepted ? "Accepted" : "Rejected"}</Tab>
+              );
+            })}
+          </TabList>
+          <TabPanels>
+            {submissions?.map((submission) => (
+              <TabPanel>
+                <CodeMirror
+                  value={atob(submission?.submissionCode)}
+                  height="fit-content"
+                  maxHeight="70vh"
+                  width="60vw"
+                  theme="dark"
+                  editable={false}
+                />
+              </TabPanel>
+            ))}
+          </TabPanels>
+        </Tabs>
+      )}
     </>
   );
 };
